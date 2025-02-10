@@ -19,6 +19,9 @@ namespace VendingMachine
             Console.WriteLine("2. Candy");
             Console.WriteLine("3. Gum");
             Console.WriteLine("4. Chips");
+            Console.Wrtiteline("5. Twizzlers");
+            Console.Writeline ("6. MountainDew");
+                            
         }
 
         static int GetUserChoice()
