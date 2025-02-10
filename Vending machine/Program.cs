@@ -41,13 +41,25 @@ namespace VendingMachine
         {
             switch (choice)
             {
+                     Console.WriteLine("Welcome to the Vending Machine!");
+                  
                 case 1:
                     Console.WriteLine("Vending Soda...");
                     break;
                 case 2:
                     Console.WriteLine("Vending Candy...");
                     break;
-            }
+                case 3.
+                     Console.WriteLine("Vending Gum...");
+                
+                case 4. 
+                    Console.Writeline("Vending Chips...");
+
+                Case 5. 
+                    Console.Writeline("Vending Twizzlers...");
+
+               Case 6. Console.Writeline("Mountain Dew...");
+
         }
     }
 }
