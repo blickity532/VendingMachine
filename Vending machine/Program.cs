@@ -17,6 +17,8 @@ namespace VendingMachine
             Console.WriteLine("Please select an item:");
             Console.WriteLine("1. Soda");
             Console.WriteLine("2. Candy");
+            Console.WriteLine("3. Gum");
+            Console.WriteLine("4. Chips");
         }
 
         static int GetUserChoice()
