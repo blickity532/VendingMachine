@@ -48,18 +48,18 @@ namespace VendingMachine
                     break;
                 case 2:
                     Console.WriteLine("Vending Candy...");
-                    break;
+                 break;
                 case 3.
                      Console.WriteLine("Vending Gum...");
-                
+                  break;
                 case 4. 
                     Console.Writeline("Vending Chips...");
-
+                 break;
                 Case 5. 
                     Console.Writeline("Vending Twizzlers...");
-
+                 break;
                Case 6. Console.Writeline("Mountain Dew...");
-
+                break;
         }
     }
 }
