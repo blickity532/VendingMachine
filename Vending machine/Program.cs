@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.IO;
 
 namespace VendingMachine
 {
@@ -19,9 +20,8 @@ namespace VendingMachine
             Console.WriteLine("2. Candy");
             Console.WriteLine("3. Gum");
             Console.WriteLine("4. Chips");
-            Console.Wrtiteline("5. Twizzlers");
-            Console.Writeline ("6. MountainDew");
-                            
+            Console.WriteLine("5. Twizzlers");
+            Console.WriteLine("6. Mountain Dew");
         }
 
         static int GetUserChoice()
@@ -29,9 +29,10 @@ namespace VendingMachine
             Console.Write("Enter the number of your choice: ");
             string? input = Console.ReadLine();
             int choice;
-            while (!int.TryParse(input, out choice) || choice < 1 || choice > 2)
+
+            while (!int.TryParse(input, out choice) || choice < 1 || choice > 6)
             {
-                Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                Console.WriteLine("Invalid choice. Please enter a number between 1 and 6.");
                 input = Console.ReadLine();
             }
             return choice;
@@ -39,27 +40,43 @@ namespace VendingMachine
 
         static void VendItem(int choice)
         {
+            string itemName = "";
+
             switch (choice)
             {
-                     Console.WriteLine("Welcome to the Vending Machine!");
-                  
                 case 1:
-                    Console.WriteLine("Vending Soda...");
+                    itemName = "Soda";
                     break;
                 case 2:
-                    Console.WriteLine("Vending Candy...");
-                 break;
-                case 3.
-                     Console.WriteLine("Vending Gum...");
-                  break;
-                case 4. 
-                    Console.Writeline("Vending Chips...");
-                 break;
-                Case 5. 
-                    Console.Writeline("Vending Twizzlers...");
-                 break;
-               Case 6. Console.Writeline("Mountain Dew...");
-                break;
+                    itemName = "Candy";
+                    break;
+                case 3:
+                    itemName = "Gum";
+                    break;
+                case 4:
+                    itemName = "Chips";
+                    break;
+                case 5:
+                    itemName = "Twizzlers";
+                    break;
+                case 6:
+                    itemName = "Mountain Dew";
+                    break;
+                default:
+                    Console.WriteLine("Invalid selection.");
+                    return;
+            }
+
+            Console.WriteLine($"Vending {itemName}...");
+            LogVendingActivity(itemName);
+        }
+
+        static void LogVendingActivity(string item)
+        {
+            string logEntry = $"{DateTime.Now}: {item} was vended.";
+            File.AppendAllText("log.txt", logEntry + Environment.NewLine);
         }
     }
 }
+
+
