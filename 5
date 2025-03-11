@@ -1,0 +1,120 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+
+namespace VendingMachine
+{
+    class Program
+    {
+        // Dictionary to store items with their names and prices
+        static Dictionary<int, (string Name, decimal Price)> items = new Dictionary<int, (string, decimal)>
+            {
+                { 1, ("Soda", 1.50m) },
+                { 2, ("Candy", 1.00m) },
+                { 3, ("Gum", 0.75m) },
+                { 4, ("Chips", 1.25m) },
+                { 5, ("Twizzlers", 1.75m) },
+                { 6, ("Mountain Dew", 2.00m) }
+            };
+
+        // Main method, entry point of the application
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                ShowMenu(); // Display the menu
+                int choice = GetUserChoice(); // Get the user's choice
+                decimal payment = GetPayment(items[choice].Price); // Get the payment from the user
+                VendItem(choice, payment); // Vend the selected item
+
+              
+                Console.Write("\nWould you like to buy another item? (yes/no): ");
+                if (!Console.ReadLine().Trim().ToLower().StartsWith("y")) // If the user does not want to buy another item
+                {
+                    Console.WriteLine("Thank you for using the vending machine! Goodbye!");
+                    break; // Exit the loop
+                }
+            }
+        }
+
+        static void ShowMenu()
+        {
+            Console.Clear(); 
+            Console.WriteLine("Welcome to the Vending Machine!"); 
+            Console.WriteLine("---------------------------------------"); 
+            foreach (var item in items) 
+            {
+                Console.WriteLine($"{item.Key}. {item.Value.Name} - ${item.Value.Price}"); 
+            }
+            Console.WriteLine();
+
+    
+        static int GetUserChoice()
+        {
+            int choice; 
+            while (true) 
+            {
+                Console.Write("Enter item number (1-6): "); // Prompt the user to enter an item number
+                if (int.TryParse(Console.ReadLine(), out choice) && items.ContainsKey(choice)) // If the input is a valid number and exists in the dictionary
+                {
+                    return choice; // Return the valid choice
+                }
+                Console.WriteLine("Invalid choice. Please select a valid item."); // Display error message for invalid choice
+            }
+        }
+
+   
+        static decimal GetPayment(decimal itemPrice)
+        {
+            decimal totalInserted = 0; // Variable to store the total amount inserted by the user
+            Console.WriteLine($"\n{items[GetUserChoice()].Name} costs ${itemPrice}"); 
+            while (totalInserted < itemPrice) 
+            {
+                Console.Write($"Insert money (remaining: ${itemPrice - totalInserted}): ");
+                if (decimal.TryParse(Console.ReadLine(), out decimal money) && money > 0) 
+                {
+                    totalInserted += money; // Add the inserted amount to the total
+                    Console.WriteLine($"Current balance: ${totalInserted}"); 
+                }
+                else
+                {
+                    Console.WriteLine("Invalid amount. Please insert a valid amount."); // Display error message for invalid amount
+                }
+            }
+            return totalInserted; // Return the total inserted amount
+        }
+
+
+        static void VendItem(int choice, decimal payment)
+        {
+            string itemName = items[choice].Name; // Get the name of the selected item
+            decimal itemPrice = items[choice].Price; // Get the price of the selected item
+            decimal change = payment - itemPrice; // Calculate the change to be returned
+
+            Console.WriteLine($"\nDispensing {itemName}... Enjoy!"); 
+            if (change > 0) 
+            {
+                Console.WriteLine($"Change returned: ${change}"); // Display the change amount
+            }
+
+            LogVendingActivity(itemName, itemPrice, payment, change); // Log the vending activity
+        }
+
+      
+        static void LogVendingActivity(string item, decimal price, decimal payment, decimal change)
+        {
+          
+            string logEntry = $"{DateTime.Now}: {item} vended for ${price}. Paid: ${payment}, Change: ${change}";
+            File.AppendAllText("log.txt", logEntry + Environment.NewLine); 
+            Console.WriteLine("Transaction recorded in log.txt");
+
+            Console.WriteLine("\nLog History:"); 
+            string[] logLines = File.ReadAllLines("log.txt"); 
+            foreach (string line in logLines) 
+            {
+                Console.WriteLine(line); 
+            }
+        }
+    }
+}
+
